@@ -1,0 +1,412 @@
+/* ====== СБРОС И БАЗОВЫЕ СТИЛИ ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #222;
+  background: #fff;
+  line-height: 1.6;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+hr.fade-line {
+  border: none;
+  height: 1px;                          /* толщина линии */
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    #0059b3 40%,
+    #0059b3 60%,
+    transparent 100%
+  );
+  margin: 2rem 0;                       /* отступы сверху и снизу */
+  width: 100%;                          /* растянуть на всю ширину */
+}
+
+a {
+  color: #0059b3;
+  text-decoration: none;
+  transition: color 0.2s, opacity 0.2s;
+}
+a:hover {
+  color: #003366;
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+h1 {
+  font-family: 'Lora', serif;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+h2 {
+  font-family: 'Lora', serif;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+h3 {
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ====== MAIN – растягивается ====== */
+main {
+  flex: 1 0 auto;
+}
+
+/* ====== ШАПКА ====== */
+.site-header {
+  background: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.logo a {
+  font-family: 'Lora', serif;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #003366;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.logo a:hover {
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+/* Основное меню (десктоп) */
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.main-nav a {
+  font-family: 'Lora', serif;
+  font-weight: 500;
+  color: #003366;
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
+}
+.main-nav a:hover {
+  color: #0059b3;
+  border-bottom-color: #0059b3;
+}
+
+/* Бургер-иконка (скрыта на десктопе) */
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+}
+.burger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #333;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+/* ====== МОБИЛЬНОЕ МЕНЮ ====== */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #fff;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  list-style: none;
+  gap: 2rem;
+}
+.mobile-menu.active {
+  transform: translateX(0);
+}
+.mobile-menu a {
+  font-family: 'Lora', serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #003366;
+}
+.close-menu {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* ====== ФУТЕР ====== */
+.site-footer {
+  background: #f8f9fa;
+  border-top: 1px solid #ddd;
+  padding: 2rem 0;
+  text-align: center;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* ====== ОБЩИЕ СЕКЦИИ ====== */
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: #0059b3;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  text-decoration: none;
+}
+.btn:hover {
+  background: #003d80;
+  transform: translateY(-1px);
+  text-decoration: none;
+  color: #fff;
+}
+
+/* ====== СПИСКИ СТАТЕЙ (для history, articles) ====== */
+.article-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+.article-list li {
+  border: 1px solid #d9edff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: box-shadow 0.2s;
+  background: #fff;
+}
+.article-list li:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+.article-list a {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+.article-list .date {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+/* ====== КАРТОЧКИ СТАТЕЙ С ПРЕВЬЮ ====== */
+.article-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;                /* убираем внутренний отступ у li */
+  overflow: hidden;          /* чтобы картинка не вылезала за border-radius */
+  border-radius: 8px;
+}
+
+.article-preview {
+  width: 100%;
+  height: 200px;             /* высота превью, можно менять */
+  object-fit: cover;         /* картинка заполняет блок, обрезая лишнее */
+  display: block;
+  border-radius: 8px;
+}
+
+.article-card-content {
+  padding: 1.5rem;           /* отступы для текста внутри карточки */
+  flex: 1;                   /* чтобы текстовая часть занимала оставшееся место */
+  display: flex;
+  flex-direction: column;
+}
+
+.article-card-content a {
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+}
+
+.article-card-content a:hover {
+  color: #0059b3;
+}
+
+.article-card-content p {
+  margin-bottom: 0.8rem;
+  color: #444;
+  flex: 1;                   /* текст может растягиваться */
+}
+
+.article-card-content .date {
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: auto;          /* дата всегда снизу */
+}
+
+/* ====== СТРАНИЦА СТАТЬИ (article.html) ====== */
+.article-content {
+  max-width: 900px;
+  margin: 2rem auto;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+.article-content h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.article-content .date {
+  color: #777;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+/* ====== КАРУСЕЛЬ С КНОПКАМИ ====== */
+.carousel-section {
+  padding: 0;
+}
+.carousel-container {
+  position: relative;
+  max-width: 972px;       /* можно подстроить под дизайн */
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+.carousel-track img {
+  width: 100%;
+  height: 450px;          /* фиксированная высота для единообразия, можно менять */
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #fff;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: color 0.2s;
+  opacity: 0.8;
+  padding: 0;
+}
+.carousel-btn:hover {
+  color: #0059b3;
+}
+.carousel-btn.prev {
+  left: 10px;
+}
+.carousel-btn.next {
+  right: 10px;
+}
+.carousel-btn svg {
+  display: block;
+  width: 32px;
+  height: 32px;
+}
+
+/* ====== ИЗОБРАЖЕНИЯ В СТАТЬЯХ ====== */
+.article-image {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.article-image img {
+  width: 80%;
+  height: auto;
+  display: block;
+  border-radius: 6px;          /* легкое скругление, опционально */
+  margin: 0 auto;          /* центрирование */
+}
+
+@media (max-width: 768px) {
+  .article-image img {
+    width: 100%;
+  }
+}
+
+.article-image figcaption {
+  margin-top: 0.8rem;
+  font-size: 1.05rem;          /* такой же кегль, как у основного текста */
+  line-height: 1.6;
+  color: #222222;
+}
+
+@media (max-width: 768px) {
+  .carousel-track img {
+    height: 300px;
+  }
+  .carousel-btn {
+    font-size: 2rem;
+    padding: 0.3rem 0.8rem;
+  }
+}
+@media (max-width: 480px) {
+  .carousel-track img {
+    height: 220px;
+  }
+}

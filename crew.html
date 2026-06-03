@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Об экипаже — Яхта «Эридан»</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/crew.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo"><a href="index.html">Яхта «Эридан»</a></div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="history.html">История строительства</a></li>
+          <li><a href="articles.html">Полезные статьи</a></li>
+          <li><a href="crew.html">Об экипаже</a></li>
+        </ul>
+      </nav>
+      <button class="burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="mobile-menu">
+        <li><a href="history.html">История строительства</a></li>
+        <li><a href="articles.html">Полезные статьи</a></li>
+        <li><a href="crew.html">Об экипаже</a></li>
+        <button class="close-menu" aria-label="Закрыть">&times;</button>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" data-aos="fade-right">
+      <h1 style="text-align:center;">Об экипаже</h1>
+    </section>
+
+    <section class="section events" data-aos="fade-up">
+      <div class="events-grid">
+        <div class="event-card">
+          <img src="images/crew-preview.jpg" alt="Экипаж" class="event-image">
+          <h3><a href="history/crew2.html">Мы</a></h3>
+          <p>Появление нашей команды</p>
+        </div>
+        <div class="event-card">
+          <img src="images/katty.jpg" alt="katty" class="event-image">
+          <h3><a href="history/crewkatty.html">18 Навигаций яхты Катти</a></h3>
+          <p>До Эридана была яхта "Катти". Здесь собраны лучшие фото того периода.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="fade-line">
+
+    <section class="carousel-section" data-aos="fade-down">
+      <div class="carousel-container">
+        <button class="carousel-btn prev" aria-label="Предыдущий слайд">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <div class="carousel-track">
+          <img src="images/crewcarousel/crew1.jpg" alt="фото 1">
+          <img src="images/crewcarousel/crew2.jpg" alt="фото 2">
+          <img src="images/crewcarousel/crew3.jpg" alt="фото 3">
+          <img src="images/crewcarousel/crew4.jpg" alt="фото 4">
+          <img src="images/crewcarousel/crew5.jpg" alt="фото 5">
+          <img src="images/crewcarousel/crew6.jpg" alt="фото 6">
+          <img src="images/crewcarousel/crew7.jpg" alt="фото 7">
+          <img src="images/crewcarousel/crew8.jpg" alt="фото 8">
+          <img src="images/crewcarousel/crew9.jpg" alt="фото 9">
+          <img src="images/crewcarousel/crew10.jpg" alt="фото 10">
+          <img src="images/crewcarousel/crew11.jpg" alt="фото 11">
+          <img src="images/crewcarousel/crew12.jpg" alt="фото 12">
+          <img src="images/crewcarousel/crew13.jpg" alt="фото 13">
+          <img src="images/crewcarousel/crew14.jpg" alt="фото 14">
+        </div>
+        <button class="carousel-btn next" aria-label="Следующий слайд">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© Яхта «Эридан», 2023–2026</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</body>
+</html>

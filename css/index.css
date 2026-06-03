@@ -1,0 +1,187 @@
+/* ====== ПОЛНОЭКРАННЫЙ HERO ====== */
+.fullscreen-hero {
+  height: 93vh;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #003366;
+  position: relative;
+  overflow: hidden;
+  background: rgb(0, 0, 0);
+}
+.hero-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 20%;
+}
+.fullscreen-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* фон затемнения можно добавить при необходимости */
+  /* background: rgba(0,0,0,0.4); */
+}
+.hero-overlay {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: 0 1.5rem;
+}
+.hero-logo {
+  max-width: 200px;
+  margin: 0 auto 2rem;
+}
+.fullscreen-hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+.fullscreen-hero p {
+  font-size: 1.3rem;
+  color: #ffffff;
+}
+
+/* ====== АНОНСЫ МЕРОПРИЯТИЙ ====== */
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+.event-card {
+  background: #f9f9f9;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+  border: 1px solid #d9edff;
+  display: flex;
+  flex-direction: column;
+}
+.event-card:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+.event-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+}
+.event-card span,
+.event-card h3,
+.event-card p {
+  padding: 0 1.5rem;
+}
+.event-date {
+  font-weight: 600;
+  color: #0059b3;
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+.event-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+.event-card p {
+  padding-bottom: 1.5rem;
+  margin-top: 0;
+}
+
+/* ====== ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ ====== */
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  text-align: center;
+}
+.spec-item {
+  background: #fff;
+  padding: 1.5rem 1rem;
+  border: 1px solid #d9edff;
+  border-radius: 8px;
+}
+.spec-label {
+  display: block;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+.spec-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #003366;
+}
+
+/* ====== БЛОКИ ПРЕВЬЮ ====== */
+.preview-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 3rem;
+  padding: 4rem 1.5rem;
+}
+.preview-block.reverse {
+  flex-direction: row-reverse;
+}
+.preview-image {
+  flex: 1;
+}
+.preview-image img {
+  border-radius: 12px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  max-height: 400px;
+}
+.preview-text {
+  flex: 1;
+}
+.preview-text h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.preview-text p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+/* ====== СОЦИАЛЬНЫЕ СЕТИ ====== */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #0059b3;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+.social-icon:hover {
+  background: #003d80;
+  transform: scale(1.1);
+  text-decoration: none;
+  color: #fff;
+}
+.social-icon-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}

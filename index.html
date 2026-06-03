@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Яхта «Эридан» — Главная</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo" data-aos="fade-down"><a href="index.html">Яхта «Эридан»</a></div>
+      <nav class="main-nav" data-aos="fade-down">
+        <ul>
+          <li><a href="history.html">История строительства</a></li>
+          <li><a href="articles.html">Полезные статьи</a></li>
+          <li><a href="crew.html">Об экипаже</a></li>
+        </ul>
+      </nav>
+      <button class="burger" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="mobile-menu">
+        <li><a href="history.html">История строительства</a></li>
+        <li><a href="articles.html">Полезные статьи</a></li>
+        <li><a href="crew.html">Об экипаже</a></li>
+        <button class="close-menu" aria-label="Закрыть">&times;</button>
+      </ul>
+    </div>
+  </header>
+
+  <!-- 1. Полноэкранный блок -->
+  <section class="fullscreen-hero">
+    <img src="images/hero-bg.jpg" alt="Яхта Эридан" class="hero-bg-image">
+    <div class="hero-overlay">
+      <img class="hero-logo" src="images/logo.png" alt="Эридан" data-aos="fade-down">
+      <h1 data-aos="fade-up">Яхта «Эридан»</h1>
+      <p data-aos="fade-up">Парусная яхта экспедиционного класса.</p>
+      <p data-aos="fade-up">Создана для путешествий.</p>
+    </div>
+  </section>
+
+  <!-- 2. Анонсы мероприятий -->
+  <section class="section events" data-aos="fade-left">
+    <h2 class="section-title">Актуальные события</h2>
+    <div class="events-grid">
+      <div class="event-card">
+        <img src="images/event-navigation.jpg" alt="Калининград 2026" class="event-image">
+        <span class="event-date">25 июня - 12 июля</span>
+        <h3>«Россия на балтике» 2026</h3>
+        <p>Поход в г. Калининград и обратно</p>
+        <p> Сайт организаторов: <a href="https://sailingbaltic.ru/">https://sailingbaltic.ru/</a></p>
+      </div>
+      <div class="event-card">
+        <img src="images/event-koivisto.jpg" alt="Яхт-клуб Койвисто" class="event-image">
+        <span class="event-date">май – сентябрь</span>
+        <h3>Яхт-клуб «Койвисто»</h3>
+        <p>Место постоянной дислокации яхты</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Технические характеристики -->
+  <section class="section specs" data-aos="fade-right">
+    <h2 class="section-title">Технические характеристики</h2>
+    <div class="specs-grid">
+      <div class="spec-item">
+        <span class="spec-label">Длина</span>
+        <span class="spec-value">14.7 м</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Ширина</span>
+        <span class="spec-value">4.8 м</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Вместимость</span>
+        <span class="spec-value">12 чел.</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Отдельные каюты</span>
+        <span class="spec-value">3, с обогревом</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Двигатель</span>
+        <span class="spec-value">Lombardini</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Парусное вооружение</span>
+        <span class="spec-value">Шлюп</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Об экипаже (с картинкой) -->
+  <section class="section preview-block crew-preview" data-aos="fade-left">
+    <div class="preview-image">
+      <img src="images/crew-preview.jpg" alt="Экипаж Эридана">
+    </div>
+    <div class="preview-text">
+      <h2>Об экипаже</h2>
+      <p>Мы любим море, мы любим парус, мы любим путешествия.</p>
+      <a href="crew.html" class="btn">Смотреть фотографии</a>
+    </div>
+  </section>
+
+  <!-- 5. История строительства (с картинкой) -->
+  <section class="section preview-block history-preview reverse" data-aos="fade-right">
+    <div class="preview-image">
+      <img src="images/history-preview.jpg" alt="Строительство яхты">
+    </div>
+    <div class="preview-text">
+      <h2>История строительства</h2>
+      <p>Яхта «Эридан» построена в июне 2021 года по проекту Voyager DS 440 в Петербурге. Материалом корпуса была выбрана сталь, парусное вооружение – шлюп.</p>
+      <p>«Эридан» планировался как судно, рассчитанное на кругосветное путешествие, поэтому при его проектировании важно было учесть определенные особенности.</p>
+      <a href="history.html" class="btn">Читать историю</a>
+    </div>
+  </section>
+
+  <!-- 6. Полезные статьи (с картинкой) -->
+  <section class="section preview-block articles-preview" data-aos="fade-left">
+    <div class="preview-image">
+      <img src="images/articles-preview.png" alt="Морские статьи">
+    </div>
+    <div class="preview-text">
+      <h2>Полезные статьи</h2>
+      <p>Для любого яхтсмена полезно задуматься о предвидении опасных ситуаций, и о том, как выбраться из них, если всё таки оказался вовлечен.</p>
+      <p>В течении ряда лет мы собирали информацию о происшествиях с яхтами на море, разбирали и осмысливали эти случаи, добавляя свои, чтобы прийти к хорошей морской практике.</p>
+      <a href="articles.html" class="btn">Все статьи</a>
+    </div>
+  </section>
+
+  <!-- 7. Ссылки на соцсети -->
+  <section class="section social-links" data-aos="fade-up">
+    <h2 class="section-title">Мы в соцсетях</h2>
+    <div class="social-icons">
+      <a href="https://vk.com/club213990459" aria-label="VK" class="social-icon">
+        <img src="images/vk.png" alt="VK" class="social-icon-img">
+      </a>
+      <a href="https://t.me/eridanboat" aria-label="Telegram" class="social-icon">
+        <img src="images/tg.png" alt="Telegram" class="social-icon-img">
+      </a>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© Яхта «Эридан», 2023–2026</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</body>
+</html>
