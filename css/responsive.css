@@ -29,6 +29,24 @@
   }
 }
 
+/* для превью блока на главной */
+@media (max-width: 800px) {
+    .preview-block {
+    flex-direction: column;
+    width: 100%;
+  }
+  .preview-block.reverse {
+    flex-direction: column;
+  }
+  .preview-image, .preview-text {
+    width: 100%;
+    text-align: center;
+  }
+  .preview-image img {
+    max-height: 300px;
+  }
+}
+
 /* переход на бургер */
 @media (max-width: 850px) {
   .main-nav {
@@ -73,20 +91,6 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .preview-block {
-    flex-direction: column;
-  }
-  .preview-block.reverse {
-    flex-direction: column;
-  }
-  .preview-image, .preview-text {
-    width: 100%;
-    text-align: center;
-  }
-  .preview-image img {
-    max-height: 300px;
-  }
-
   .social-icon {
     width: 50px;
     height: 50px;
@@ -95,6 +99,10 @@
 
   .article-preview {
     height: 180px;
+  }
+
+  .carousel-track img {
+    height: 300px;
   }
 }
 
@@ -140,7 +148,7 @@
   }
 
   .carousel-track img {
-    height: 150px;
+    height: 200px;
   }
 
   .event-image {
