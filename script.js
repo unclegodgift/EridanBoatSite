@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-    // --- Бесконечная карусель с автосменой и кнопками ---
+  // --- Бесконечная карусель с автосменой и кнопками ---
   const track = document.querySelector('.carousel-track');
   const prevBtn = document.querySelector('.carousel-btn.prev');
   const nextBtn = document.querySelector('.carousel-btn.next');
@@ -127,5 +127,68 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
+  // подгон размеров картинок
+  function adjustArticleImages() {
+    const images = document.querySelectorAll('.article-image img');
+    if (!images.length) return;
+
+    const vh = window.innerHeight;
+    const heightThreshold = 0.8; // порог срабатывания (90% высоты экрана)
+
+    images.forEach(img => {
+      if (img.naturalWidth === 0) return;
+
+      // Сброс всех инлайн-стилей до базовых CSS
+      img.style.maxWidth = '';
+      img.style.maxHeight = '';
+      img.style.width = '';
+      img.style.height = '';
+      img.offsetHeight; // reflow
+
+      const figure = img.closest('.article-image');
+      const containerWidth = figure.clientWidth;
+      const targetWidth = containerWidth * 0.8;
+      const calculatedHeight = (targetWidth / img.naturalWidth) * img.naturalHeight;
+
+      if (calculatedHeight > vh * heightThreshold) {
+        // Вертикальное изображение – фиксируем высоту 80vh
+        figure.style.maxWidth = '100%'; // разрешаем фигуре занять всю ширину статьи
+        img.style.height = '60vh';
+        img.style.width = 'auto';
+        img.style.maxWidth = '100%';
+        img.style.maxHeight = 'none';
+        img.style.objectFit = 'contain';
+      } else {
+        // Горизонтальное или умеренное – фиксируем ширину 80% контейнера
+        figure.style.maxWidth = ''; // возвращаем как было (убираем inline)
+        img.style.maxWidth = '80%';
+        img.style.maxHeight = '600px'; // дополнительный пиксельный лимит (опционально)
+        img.style.height = 'auto';
+        img.style.width = 'auto';
+      }
+    });
+  }
+
+  // Дебанс для ресайза (чтобы не дёргать часто)
+  function debounce(fn, delay) {
+    let timer;
+    return function(...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+  }
+
+  // Основные слушатели
+  window.addEventListener('load', adjustArticleImages);
+  window.addEventListener('resize', debounce(adjustArticleImages, 150));
+
+  // Подстраховка: если какое-то изображение загрузилось позже (например, ленивая подгрузка)
+  document.addEventListener('load', (e) => {
+    if (e.target.tagName === 'IMG' && e.target.closest('.article-image')) {
+      adjustArticleImages();
+    }
+  }, true); // useCapture = true, чтобы ловить события загрузки изображений
   
+
+
 });

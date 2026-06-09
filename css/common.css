@@ -400,11 +400,13 @@ main {
 }
 
 .article-image img {
-  width: 80%;
-  height: auto;
   display: block;
-  border-radius: 6px;          /* легкое скругление, опционально */
-  margin: 0 auto;          /* центрирование */
+  max-width: 80%;
+  max-height: 700px;   /* fallback для очень больших экранов, будет переопределён скриптом при необходимости */
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 6px;
 }
 
 @media (max-width: 768px) {
