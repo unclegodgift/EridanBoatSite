@@ -191,4 +191,54 @@ document.addEventListener('DOMContentLoaded', () => {
   
 
 
+  // --- Фильтрация статей по категориям ---
+  const filterContainer = document.getElementById('filter-buttons');
+  const articleList = document.querySelector('.article-list');
+
+  if (filterContainer && articleList) {
+    const cards = Array.from(articleList.querySelectorAll('.article-card'));
+
+    // Собираем уникальные категории из span.date
+    const categories = new Set();
+    cards.forEach(card => {
+      const categorySpan = card.querySelector('.date');
+      if (categorySpan) {
+        categories.add(categorySpan.textContent.trim());
+      }
+    });
+
+    // Создаём кнопку "Все"
+    const allButton = document.createElement('button');
+    allButton.className = 'filter-btn active';
+    allButton.textContent = 'Все';
+    allButton.addEventListener('click', () => {
+      setActiveFilter(allButton);
+      cards.forEach(card => card.style.display = '');
+    });
+    filterContainer.appendChild(allButton);
+
+    // Создаём кнопки для каждой категории
+    categories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.textContent = cat;
+      btn.addEventListener('click', () => {
+        setActiveFilter(btn);
+        cards.forEach(card => {
+          const cardCat = card.querySelector('.date')?.textContent.trim();
+          card.style.display = (cardCat === cat) ? '' : 'none';
+        });
+      });
+      filterContainer.appendChild(btn);
+    });
+
+    // Функция переключения активного класса
+    function setActiveFilter(activeBtn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      activeBtn.classList.add('active');
+    }
+  }
+
+
+
 });
