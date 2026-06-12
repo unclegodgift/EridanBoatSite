@@ -1,3 +1,146 @@
+// ---------- Лайтбокс ----------
+
+let lightbox = null;
+let lightboxImg = null;
+let scale = 1;
+let initialFitScale = 1;
+let naturalWidth, naturalHeight;
+
+// Переменные для pinch-to-zoom
+let initialPinchDistance = null;
+let initialPinchScale = 1;
+
+function createLightbox() {
+  lightbox = document.createElement('div');
+  lightbox.className = 'lightbox';
+  lightbox.innerHTML = `
+    <span class="lightbox-close">&times;</span>
+    <div class="lightbox-content">
+      <img class="lightbox-image" src="" alt="">
+    </div>
+  `;
+  document.body.appendChild(lightbox);
+
+  lightboxImg = lightbox.querySelector('.lightbox-image');
+
+  // Закрытие по клику на фон или кнопку закрытия
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target.classList.contains('lightbox-close')) {
+      closeLightbox();
+    }
+  });
+
+  // Закрытие по клику на само изображение
+  lightboxImg.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeLightbox();
+  });
+
+  // Закрытие по Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.style.opacity === '1') {
+      closeLightbox();
+    }
+  });
+
+  // Зум колёсиком мыши
+  lightboxImg.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.1 : 0.1;
+    let newScale = scale + delta;
+    newScale = Math.max(initialFitScale, Math.min(5, newScale));
+    setScale(newScale);
+  });
+
+  // Pinch-to-zoom (сенсорные жесты)
+  lightboxImg.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      initialPinchDistance = getTouchDistance(e.touches);
+      initialPinchScale = scale;
+    }
+  });
+
+  lightboxImg.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 2 && initialPinchDistance !== null) {
+      e.preventDefault();
+      const currentDistance = getTouchDistance(e.touches);
+      const ratio = currentDistance / initialPinchDistance;
+      let newScale = initialPinchScale * ratio;
+      newScale = Math.max(initialFitScale, Math.min(5, newScale));
+      setScale(newScale);
+    }
+  });
+
+  lightboxImg.addEventListener('touchend', (e) => {
+    if (e.touches.length < 2) {
+      initialPinchDistance = null;
+    }
+  });
+}
+
+// Вспомогательная функция: расстояние между двумя пальцами
+function getTouchDistance(touches) {
+  const dx = touches[0].clientX - touches[1].clientX;
+  const dy = touches[0].clientY - touches[1].clientY;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+function openLightbox(src, alt) {
+  if (!lightbox) createLightbox();
+
+  lightboxImg.src = src;
+  lightboxImg.alt = alt;
+
+  lightbox.style.opacity = '1';
+  lightbox.style.pointerEvents = 'auto';
+  document.body.style.overflow = 'hidden';
+
+  lightboxImg.onload = () => {
+    naturalWidth = lightboxImg.naturalWidth;
+    naturalHeight = lightboxImg.naturalHeight;
+    const maxW = window.innerWidth * 0.9;
+    const maxH = window.innerHeight * 0.9;
+    initialFitScale = Math.min(maxW / naturalWidth, maxH / naturalHeight, 1);
+    scale = initialFitScale;
+    setScale(scale);
+    lightbox.querySelector('.lightbox-content').scrollTo(0, 0);
+  };
+}
+
+function closeLightbox() {
+  lightbox.style.opacity = '0';
+  lightbox.style.pointerEvents = 'none';
+  document.body.style.overflow = '';
+}
+
+function setScale(s) {
+  scale = s;
+  lightboxImg.style.width = naturalWidth * scale + 'px';
+  lightboxImg.style.height = naturalHeight * scale + 'px';
+}
+
+// ---------- НАСТРОЙКИ ЛАЙТБОКСА ----------
+const lightboxDisabledSelectors = ['.fullscreen-hero', '.carousel-track'];
+
+function initLightbox() {
+  for (const selector of lightboxDisabledSelectors) {
+    if (document.querySelector(selector)) return;
+  }
+  document.querySelectorAll('img').forEach(img => {
+    if (img.closest('.carousel-track') ||
+        img.closest('.social-icon') ||
+        img.closest('.logo') ||
+        img.closest('.lightbox')) return;
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', (e) => {
+      e.preventDefault();
+      openLightbox(img.src, img.alt);
+    });
+  });
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
   // --- Бургер-меню ---
   const burger = document.querySelector('.burger');
@@ -239,6 +382,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-
+  initLightbox();
 
 });
