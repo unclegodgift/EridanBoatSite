@@ -1,12 +1,22 @@
-// ---------- Лайтбокс ----------
-
+// ---------- Лайтбокс с перетаскиванием ----------
 let lightbox = null;
 let lightboxImg = null;
+let lightboxContent = null;
+
 let scale = 1;
 let initialFitScale = 1;
 let naturalWidth, naturalHeight;
 
-// Переменные для pinch-to-zoom
+// Позиция изображения (для drag)
+let translateX = 0;
+let translateY = 0;
+
+// Состояния drag
+let isDragging = false;
+let dragStartX, dragStartY;
+let startTranslateX, startTranslateY;
+
+// Для pinch
 let initialPinchDistance = null;
 let initialPinchScale = 1;
 
@@ -16,11 +26,12 @@ function createLightbox() {
   lightbox.innerHTML = `
     <span class="lightbox-close">&times;</span>
     <div class="lightbox-content">
-      <img class="lightbox-image" src="" alt="">
+      <img class="lightbox-image" src="" alt="" draggable="false">
     </div>
   `;
   document.body.appendChild(lightbox);
 
+  lightboxContent = lightbox.querySelector('.lightbox-content');
   lightboxImg = lightbox.querySelector('.lightbox-image');
 
   // Закрытие по клику на фон или кнопку закрытия
@@ -30,8 +41,8 @@ function createLightbox() {
     }
   });
 
-  // Закрытие по клику на само изображение
-  lightboxImg.addEventListener('click', (e) => {
+  // Закрытие по двойному клику на изображение
+  lightboxImg.addEventListener('dblclick', (e) => {
     e.stopPropagation();
     closeLightbox();
   });
@@ -43,47 +54,136 @@ function createLightbox() {
     }
   });
 
-  // Зум колёсиком мыши
+  // Зум колёсиком мыши с сохранением точки под курсором
   lightboxImg.addEventListener('wheel', (e) => {
     e.preventDefault();
     const delta = e.deltaY > 0 ? -0.1 : 0.1;
     let newScale = scale + delta;
     newScale = Math.max(initialFitScale, Math.min(5, newScale));
-    setScale(newScale);
+    if (newScale !== scale) {
+      const rect = lightboxImg.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left;
+      const offsetY = e.clientY - rect.top;
+      const prevScale = scale;
+      scale = newScale;
+      // Корректируем смещение, чтобы точка под курсором осталась на месте
+      translateX = (translateX - offsetX) * (scale / prevScale) + offsetX;
+      translateY = (translateY - offsetY) * (scale / prevScale) + offsetY;
+      applyTransform();
+    }
   });
 
-  // Pinch-to-zoom (сенсорные жесты)
+  // --- Drag мышью ---
+  lightboxImg.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    startTranslateX = translateX;
+    startTranslateY = translateY;
+    lightboxImg.style.cursor = 'grabbing';
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - dragStartX;
+    const dy = e.clientY - dragStartY;
+    translateX = startTranslateX + dx;
+    translateY = startTranslateY + dy;
+    applyTransform();
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      lightboxImg.style.cursor = 'grab';
+    }
+  });
+
+  // --- Drag пальцем (одно касание) ---
   lightboxImg.addEventListener('touchstart', (e) => {
-    if (e.touches.length === 2) {
+    if (e.touches.length === 1) {
+      isDragging = true;
+      dragStartX = e.touches[0].clientX;
+      dragStartY = e.touches[0].clientY;
+      startTranslateX = translateX;
+      startTranslateY = translateY;
+      lightboxImg.style.cursor = 'grabbing';
       e.preventDefault();
+    } else if (e.touches.length === 2) {
+      isDragging = false;
       initialPinchDistance = getTouchDistance(e.touches);
       initialPinchScale = scale;
+      e.preventDefault();
     }
   });
 
   lightboxImg.addEventListener('touchmove', (e) => {
-    if (e.touches.length === 2 && initialPinchDistance !== null) {
+    if (e.touches.length === 1 && isDragging) {
+      const dx = e.touches[0].clientX - dragStartX;
+      const dy = e.touches[0].clientY - dragStartY;
+      translateX = startTranslateX + dx;
+      translateY = startTranslateY + dy;
+      applyTransform();
       e.preventDefault();
+    } else if (e.touches.length === 2 && initialPinchDistance !== null) {
       const currentDistance = getTouchDistance(e.touches);
       const ratio = currentDistance / initialPinchDistance;
       let newScale = initialPinchScale * ratio;
       newScale = Math.max(initialFitScale, Math.min(5, newScale));
-      setScale(newScale);
+      const prevScale = scale;
+      if (newScale !== prevScale) {
+        scale = newScale;
+        const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+        const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+        const rect = lightboxImg.getBoundingClientRect();
+        const offsetX = cx - rect.left;
+        const offsetY = cy - rect.top;
+        translateX = (translateX - offsetX) * (scale / prevScale) + offsetX;
+        translateY = (translateY - offsetY) * (scale / prevScale) + offsetY;
+        applyTransform();
+      }
+      e.preventDefault();
     }
   });
 
   lightboxImg.addEventListener('touchend', (e) => {
-    if (e.touches.length < 2) {
+    if (e.touches.length === 0) {
+      isDragging = false;
       initialPinchDistance = null;
+      lightboxImg.style.cursor = 'grab';
     }
   });
 }
 
-// Вспомогательная функция: расстояние между двумя пальцами
+// Вспомогательная функция расстояния между пальцами
 function getTouchDistance(touches) {
   const dx = touches[0].clientX - touches[1].clientX;
   const dy = touches[0].clientY - touches[1].clientY;
   return Math.sqrt(dx * dx + dy * dy);
+}
+
+// Применяем трансформацию (только translate + scale, размеры не трогаем)
+function applyTransform() {
+  lightboxImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+}
+
+// Центрирование изображения с учётом текущего scale
+function centerImage() {
+  if (!lightboxImg || !lightboxContent) return;
+
+  const containerWidth = lightboxContent.clientWidth;
+  const containerHeight = lightboxContent.clientHeight;
+
+  // Визуальный размер = естественный * scale
+  const visualWidth = naturalWidth * scale;
+  const visualHeight = naturalHeight * scale;
+
+  // Вычисляем translate так, чтобы центр масштабированного изображения совпал с центром контейнера
+  translateX = (containerWidth - visualWidth) / 2;
+  translateY = (containerHeight - visualHeight) / 2;
+
+  applyTransform();
 }
 
 function openLightbox(src, alt) {
@@ -103,8 +203,9 @@ function openLightbox(src, alt) {
     const maxH = window.innerHeight * 0.9;
     initialFitScale = Math.min(maxW / naturalWidth, maxH / naturalHeight, 1);
     scale = initialFitScale;
-    setScale(scale);
-    lightbox.querySelector('.lightbox-content').scrollTo(0, 0);
+    translateX = 0;
+    translateY = 0;
+    centerImage();
   };
 }
 
@@ -112,16 +213,15 @@ function closeLightbox() {
   lightbox.style.opacity = '0';
   lightbox.style.pointerEvents = 'none';
   document.body.style.overflow = '';
+  isDragging = false;
 }
 
 function setScale(s) {
-  scale = s;
-  lightboxImg.style.width = naturalWidth * scale + 'px';
-  lightboxImg.style.height = naturalHeight * scale + 'px';
+  // оставлена для совместимости, не используется
 }
 
 // ---------- НАСТРОЙКИ ЛАЙТБОКСА ----------
-const lightboxDisabledSelectors = ['.fullscreen-hero', '.carousel-track'];
+const lightboxDisabledSelectors = ['.fullscreen-hero', '.carousel-track', '.hero'];
 
 function initLightbox() {
   for (const selector of lightboxDisabledSelectors) {
